@@ -70,9 +70,40 @@ class="relative z-[15] text-sm flex flex-wrap justify-between w-full bottom-2 it
             </div>
         </div>
     </div>
+</div>
+<div id="custom-headless-toaster" style="bottom: 6rem;display: none;" 
+    class="group fixed right-3 z-10 hidden gap-1 lg:flex">
+    <div style="min-width: 500px;"
+        class="popover absolute bottom-full right-0 z-20 mb-2 w-full overflow-hidden rounded-md border border-token-border-light bg-token-main-surface-primary p-1.5 shadow-lg outline-none opacity-100 translate-y-0"
+        >
+        <a class="flex px-3 min-h-[44px] py-1 items-center gap-3 transition-colors duration-200 cursor-pointer text-sm rounded-md hover:bg-token-main-surface-tertiary">
+            <!-- https://codepen.io/Rplus/pen/PWZYRM -->
+            <div class="box">
+                <div class="cat">
+                    <div class="cat__body"></div>
+                    <div class="cat__body"></div>
+                    <div class="cat__tail"></div>
+                    <div class="cat__head"></div>
+                </div>
+            </div>
+            <div class="w-full">
+                <div class="mb-2 flex justify-between items-center">
+                    <h3 class="text-sm font-semibold text-gray-800 dark:text-white">Bulk Deleting...</h3>
+                    <span id="custom-failed-counter" class="text-sm text-gray-800 dark:text-white">Failed: 0</span>
+                </div>
+                <div class="flex w-full h-4 bg-gray-200 rounded-full overflow-hidden dark:bg-gray-700"
+                    role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100">
+                    <div id="custom-progress-bar" style="width: 50%;background-color: #3B82F6;"
+                        class="flex flex-col justify-center rounded-full overflow-hidden bg-blue-70 fbc-blue-70 text-xs text-white text-center whitespace-nowrap dark:bg-blue-500 transition duration-500">
+                        0/0</div>
+                </div>
+            </div>
+        </a>
+    </div>
 </div>`;
 
 let checkboxActive = true;
+let toast;
 
 function iterateCheckboxes(checkboxAction) {
     const conversationCheckboxes = document.getElementsByClassName("custom-checkbox");
@@ -171,6 +202,7 @@ function toggleCheckboxes() {
             apiGetAccessToken();
             injectElements();
             attachActionListeners();
+            toast = new ToastNotification();
             clearInterval(checkInterval);
         }
     }, 1000);

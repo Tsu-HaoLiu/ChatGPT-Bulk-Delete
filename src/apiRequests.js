@@ -41,14 +41,25 @@ async function deleteConversations() {
     const selectedConversations = document.querySelectorAll(".custom-checkbox:checked");
     if (selectedConversations.length === 0) return;
 
+    toast.createToast(selectedConversations.length);
+
     for (const checkboxElement of selectedConversations) {
         const conversationId = checkboxElement.nextElementSibling.pathname.replace("/c/", "");
 
-        await apiDeleteConversation(conversationId);
-        checkboxElement.parentElement.parentElement.style.display = "none";
+        const response = await apiDeleteConversation(conversationId);
+
+        if (response === true) {
+            checkboxElement.parentElement.parentElement.style.display = "none";
+            checkboxElement.remove();
+            toast.updateProgressCounter();
+        } else {
+            toast.updateErrorCounter();
+        }
     
         // Ratelimit
         console.log(`[${new Date().toLocaleTimeString()}]` , "sleeping");
         await sleep(getRandomArbitrary(2000, 8000));
     }
+
+    toast.clearToast();
 }
