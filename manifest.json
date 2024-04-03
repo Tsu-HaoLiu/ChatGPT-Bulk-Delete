@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "ChatGPT Bulk Delete",
     "author": "Tsu-Hao Liu",
-    "version": "2024.4.2",
+    "version": "2024.4.6",
     "description": "Web extension to delete ChatGPT conversations in bulk",
     "icons": {
         "128": "icons/icon128.png"
@@ -11,8 +11,12 @@
         "*://chat.openai.com/*"
     ],
     "content_scripts": [{
-        "matches": ["*://chat.openai.com/*"],
         "js": ["content_script.js"],
+        "css": ["stylesheets.css"],
+        "matches": ["*://chat.openai.com/*"],
         "run_at": "document_end"
-    }]
+    }],
+    "web_accessible_resources": [
+        "icons/cat_loading_trans.png"
+    ]
 }
