@@ -11,9 +11,6 @@ I'm excited to share a web extension to bulk delete your ChatGPT conversations.
 - Select/Deselect All Conversations
 - Select individual Conversations
 - Bulk Removing Conversations
-- Confirmation dialog to prevent accidental deletion.
+- Confirmation dialog to prevent accidental deletion
+- Notification popup for bulk deletion progress
 
-
-# TODO
-- Add toast message when bulk deleting conversations.
-- Add styling that matches OpenAI's brand identity
