@@ -1,6 +1,4 @@
 class ToastNotification {
-
-    // todo add animation for progress bar, so it doesn't feel so choppy
     constructor() {
         this.toastPopup = document.getElementById("custom-headless-toaster");
         this.failedCounterDisplay = document.getElementById("custom-failed-counter");
@@ -20,6 +18,7 @@ class ToastNotification {
     }
 
     clearToast() {
+        this._resetCounters();
         this._hideElement();
     }
 
@@ -49,13 +48,12 @@ class ToastNotification {
     }
 
     _displayElement() {
-        this.toastPopup.style.display = "initial";
+        this.toastPopup.style.opacity = 1;
+        this.toastPopup.style.bottom = "6rem";
     }
     
     _hideElement() {
-        // todo add popup animations from the bottom right to bottom set position
-        this.toastPopup.style.display = "none";
+        this.toastPopup.style.opacity = 0;
+        this.toastPopup.style.bottom = "-10rem";
     }
 }
-
-

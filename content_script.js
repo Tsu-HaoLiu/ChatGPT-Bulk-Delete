@@ -7,11 +7,8 @@ function injectScript(src) {
 }
 
 window.addEventListener("load", () => {
-    const checkInterval = setInterval(async () => {
-        if (document.querySelector('[aria-label="Chat history"]')) {
-            injectScript("./apiRequests.js");
-            injectScript("./eventHandlers.js");
-            clearInterval(checkInterval);
-        }
-    }, 1000);
+    injectScript("./src/apiRequests.js");
+    injectScript("./src/eventHandlers.js");
+    injectScript("./src/popupHandlers.js");
+    document.querySelector(':root').style.setProperty("--custom-loading-icon", `url(${browser.runtime.getURL("icons/cat_loading_trans.png")})`)
 });

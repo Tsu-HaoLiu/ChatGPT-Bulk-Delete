@@ -41,7 +41,7 @@ async function deleteConversations() {
     const selectedConversations = document.querySelectorAll(".custom-checkbox:checked");
     if (selectedConversations.length === 0) return;
 
-    toast.createToast(selectedConversations.length);
+    toaster.createToast(selectedConversations.length);
 
     for (const checkboxElement of selectedConversations) {
         const conversationId = checkboxElement.nextElementSibling.pathname.replace("/c/", "");
@@ -51,9 +51,9 @@ async function deleteConversations() {
         if (response === true) {
             checkboxElement.parentElement.parentElement.style.display = "none";
             checkboxElement.remove();
-            toast.updateProgressCounter();
+            toaster.updateProgressCounter();
         } else {
-            toast.updateErrorCounter();
+            toaster.updateErrorCounter();
         }
     
         // Ratelimit
@@ -61,5 +61,5 @@ async function deleteConversations() {
         await sleep(getRandomArbitrary(2000, 8000));
     }
 
-    toast.clearToast();
+    toaster.clearToast();
 }
