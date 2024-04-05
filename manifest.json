@@ -2,7 +2,7 @@
     "manifest_version": 2,
     "name": "ChatGPT Bulk Delete",
     "author": "Tsu-Hao Liu",
-    "version": "2024.4.6",
+    "version": "2024.4.8",
     "description": "Web extension to delete ChatGPT conversations in bulk",
     "icons": {
         "128": "icons/icon128.png"

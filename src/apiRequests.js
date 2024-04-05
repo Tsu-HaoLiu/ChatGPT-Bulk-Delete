@@ -62,4 +62,5 @@ async function deleteConversations() {
     }
 
     toaster.clearToast();
+    toaster.refreshProgressDisplay();
 }

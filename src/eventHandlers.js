@@ -1,26 +1,3 @@
-
-/// shift clicking multi-select checkbox
-// const checkboxes = document.querySelectorAll( '.inbox input[type="checkbox"]' );
-// let lastChecked;
-
-// function handleCheck( e ) {
-//     let inBetween =  false;
-//     if( e.shiftKey && this.checked ) {
-//         checkboxes.forEach( checkbox => {
-//             if( checkbox === this || checkbox === lastChecked ) {
-//                 inBetween = !inBetween;
-//             }
-//             if( inBetween ) {
-//                 checkbox.checked = true;
-//             }
-//         });
-//     }
-//     lastChecked = this;
-// };
-
-// checkboxes.forEach( checkbox => checkbox.addEventListener( 'click', handleCheck ) );
-
-
 const internalHTML = `<div style="opacity: 1; height: auto; overflow: hidden;top: 3.75rem;" 
 class="sticky z-20 text-sm flex flex-wrap justify-between w-full bottom-2 items-start left-0 right-0 bg-token-sidebar-surface-primary">
     <div id="custom-toggle-checkbox" style="" 
@@ -87,6 +64,7 @@ class="sticky z-20 text-sm flex flex-wrap justify-between w-full bottom-2 items-
                     <div class="cat__head"></div>
                 </div>
             </div>
+            <!----------------------------------------->
             <div class="w-full">
                 <div class="mb-2 flex justify-between items-center">
                     <h3 class="text-sm font-semibold text-gray-800 dark:text-white">Bulk Deleting...</h3>
@@ -113,7 +91,6 @@ function toggleDisplay(elements) {
         e.style.display = e.style.display == "none" ? "initial" : "none";
     }
 }
-
 
 function iterateCheckboxes(checkboxAction) {
     const conversationCheckboxes = document.getElementsByClassName("custom-checkbox");
@@ -161,6 +138,35 @@ function attachActionListeners() {
     deselectAll.addEventListener("click", iterateCheckboxes.bind(null, false));
 }
 
+
+let lastChecked = null;
+
+function checkboxShiftSelect(e) {
+    if (!lastChecked) {
+        lastChecked = e.target;
+        return;
+    }
+
+    if (e.shiftKey) {
+        const checkboxCollections = document.getElementsByClassName("custom-checkbox");
+        const checkboxArray = Array.from(checkboxCollections);
+        const from = checkboxArray.indexOf(e.target);
+        const to = checkboxArray.indexOf(lastChecked);
+
+        const start = Math.min(from, to);
+        const end = Math.max(from, to) + 1;
+
+        for (let i = start; i < end; i++) {
+            // Outside the start and end window continue
+            if (i < start && i > end) continue;
+
+            checkboxCollections[i].checked = lastChecked.checked;
+        }
+    }
+
+    lastChecked = e.target;
+}
+
 function toggleCheckboxes() {
     const conversations = document.querySelectorAll("li.relative");
     const selectAll = document.getElementById("custom-select-all");
@@ -183,7 +189,7 @@ function toggleCheckboxes() {
         const checkbox = document.createElement('input');
         checkbox.type = "checkbox";
         checkbox.className = "custom-checkbox";
-        // css styling
+        checkbox.addEventListener("click", checkboxShiftSelect);
 
         conversation.firstElementChild.style.alignItems = "center";
         conversation.firstElementChild.style.display = "flex";
@@ -198,7 +204,7 @@ function toggleCheckboxes() {
 (() => {
     const checkInterval = setInterval(async () => {
         try {
-            if (document.querySelector('[aria-label="Chat history"]')) {
+            if (document.querySelector('[aria-label="Chat history"]').firstElementChild.nextElementSibling.firstElementChild) {
                 apiGetAccessToken();
                 injectElements();
                 attachActionListeners();
